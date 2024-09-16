@@ -24,7 +24,7 @@ on:
         description: 'The path to the Dockerfile'
         required: false
         type: string
-        default: '.'  # Default to current directory
+        default: '.'
     secrets:
       ACR_USERNAME:
         description: 'Azure Container Registry Username'
@@ -63,7 +63,7 @@ jobs:
           docker push ${{ inputs.registry_url }}/${{ inputs.image_name }}:${{ env.VERSION }}
 
       - name: Push "latest" tag (if enabled)
-        if: ${{ inputs.latest_tag == 'true' }}
+        if: ${{ inputs.latest_tag == true }}
         run: |
           docker tag ${{ inputs.registry_url }}/${{ inputs.image_name }}:${{ env.VERSION }} ${{ inputs.registry_url }}/${{ inputs.image_name }}:latest
           docker push ${{ inputs.registry_url }}/${{ inputs.image_name }}:latest
