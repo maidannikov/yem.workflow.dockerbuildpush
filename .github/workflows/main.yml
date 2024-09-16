@@ -11,7 +11,6 @@ jobs:
     with:
       registry_url: 'yemacr.azurecr.io'
       image_name: 'test-ubuntu-image'
-      version: '1.0.1'
       latest_tag: true
     secrets:
       ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
