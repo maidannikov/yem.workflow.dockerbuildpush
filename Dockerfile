@@ -1,8 +1,5 @@
-FROM node:18
-WORKDIR /usr/src/app
+  FROM ubuntu:22.04
+  RUN apt-get update -y
+  RUN apt-get upgrade -y
+  RUN apt-get install -y curl
 
-RUN npm install
-
-EXPOSE 8080
-
-CMD ["ping google.com"]
