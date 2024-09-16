@@ -13,7 +13,7 @@ on:
         type: string
       version:
         description: 'The version tag for the Docker image'
-        required: true
+        required: false
         type: string
       latest_tag:
         description: 'Include the "latest" tag (true/false)'
@@ -39,7 +39,16 @@ jobs:
 
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
+
+      - name: Set version if not provided
+        id: set-version
+        run: |
+          if [ -z "${{ inputs.version }}" ]; then
+            echo "VERSION=${{ github.run_number }}" >> $GITHUB_ENV
+          else
+            echo "VERSION=${{ inputs.version }}" >> $GITHUB_ENV
+          fi
 
       - name: Log in to Azure Container Registry
         run: |
@@ -47,16 +56,16 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -f ${{ inputs.dockerfile_path }}/Dockerfile -t ${{ inputs.registry_url }}/${{ inputs.image_name }}:${{ inputs.version }} ${{ inputs.dockerfile_path }}
+          docker build -f ${{ inputs.dockerfile_path }}/Dockerfile -t ${{ inputs.registry_url }}/${{ inputs.image_name }}:${{ env.VERSION }} ${{ inputs.dockerfile_path }}
 
       - name: Push Docker image
         run: |
-          docker push ${{ inputs.registry_url }}/${{ inputs.image_name }}:${{ inputs.version }}
+          docker push ${{ inputs.registry_url }}/${{ inputs.image_name }}:${{ env.VERSION }}
 
       - name: Push "latest" tag (if enabled)
         if: ${{ inputs.latest_tag == 'true' }}
         run: |
-          docker tag ${{ inputs.registry_url }}/${{ inputs.image_name }}:${{ inputs.version }} ${{ inputs.registry_url }}/${{ inputs.image_name }}:latest
+          docker tag ${{ inputs.registry_url }}/${{ inputs.image_name }}:${{ env.VERSION }} ${{ inputs.registry_url }}/${{ inputs.image_name }}:latest
           docker push ${{ inputs.registry_url }}/${{ inputs.image_name }}:latest
 
       - name: Logout from Azure
