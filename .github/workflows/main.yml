@@ -7,7 +7,7 @@ on:
 
 jobs:
   call-reusable-workflow:
-    uses: maidannikov/yem.workflow.dockerbuildpush/.github/workflows/dockerbuildpush.yml@main
+    uses: maidannikov/yem.workflow.dockerbuildpush/.github/workflows/dockerbuildpush.yml@master
     with:
       registry_url: 'yemacr.azurecr.io'
       image_name: 'test-ubuntu-image'

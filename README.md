@@ -18,7 +18,7 @@ on:
 
 jobs:
   deploy:
-    uses: maidannikov/yem.workflow.dockerbuildpush/.github/workflows/dockerbuildpush.yml@main
+    uses: maidannikov/yem.workflow.dockerbuildpush/.github/workflows/dockerbuildpush.yml@master
     with:
       registry_url: 'yourregistry.azurecr.io'
       image_name: 'your-image-name'
