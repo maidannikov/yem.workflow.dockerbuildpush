@@ -70,4 +70,6 @@ jobs:
 
       - name: Logout from Azure
         run: |
+          echo "REGISTRY_URL=${{ inputs.registry_url }}" >> $GITHUB_ENV
+          echo "IMAGE_NAME=${{ inputs.image_name }}" >> $GITHUB_ENV
           docker logout ${{ inputs.registry_url }}
