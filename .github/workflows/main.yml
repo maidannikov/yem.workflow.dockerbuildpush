@@ -12,6 +12,8 @@ jobs:
       registry_url: 'yemacr.azurecr.io'
       image_name: 'wfmonitor'
       version: '1.0.0'
+      latest_tag: false
+      dockerfile_path: '.'
     secrets:
       ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
       ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
